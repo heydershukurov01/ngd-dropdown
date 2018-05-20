@@ -1,2 +1,1 @@
-# ngd-dropdown
-High functional dropdown package for Angula 2+ 
+<h1>NGD Dropdown</h1>

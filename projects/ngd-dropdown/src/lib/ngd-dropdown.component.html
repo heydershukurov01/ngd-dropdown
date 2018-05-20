@@ -1,0 +1,20 @@
+<!-- Selected Data will be present here -->
+<div [class]="'ngd-' + options.theme" (clickOutside)="closeDropdown()">
+  <div class="ngd-dropdown-view cursor-pointer" (click)="toggleDropdown()">
+    <div class="ngd-badge-container">
+      <span class="ngd-dropdown-badge"></span>
+    </div>
+    <div class="ngd-action-container">
+      <i class="zmdi zmdi-chevron-right transition" [class.rotate-90]="toggle"></i>
+    </div>
+  </div>
+  <!-- Browser area -->
+  <div class="ngd-dropdown-browsing-container cursor-pointer" *ngIf="toggle">
+      <input type="text" class="ngd-search-input" (input)="onChange($event)" [(ngModel)]="_value">
+      <ul class="ngd-dropdown-results-container">
+        <li class="ngd-dropdown-result">test</li>
+        <li class="ngd-dropdown-result">test</li>
+        <li class="ngd-dropdown-result">test</li>
+      </ul>
+  </div>
+</div>

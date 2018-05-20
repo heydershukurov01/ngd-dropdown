@@ -1,0 +1,62 @@
+/**
+  Author Heyder Shukurov
+  Created 17.05.2018
+ */
+/* View */
+.ngd-default .ngd-dropdown-view{
+  border: 1px solid lightgray;
+  border-radius: 2px;
+  min-height: 17px;
+  display: flex;
+  width: 100%;
+}
+.ngd-default .ngd-dropdown-view .ngd-badge-container{
+  width: 95%;
+  padding-left: 5px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+.ngd-default .ngd-dropdown-view .ngd-action-container{
+  width: 5%;
+  text-align: right;
+  padding-right: 5px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+/* Hidden browser */
+.ngd-default .ngd-dropdown-browsing-container{
+  border: 1px solid lightgray;
+  border-radius: 2px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+/* Search Input */
+.ngd-default .ngd-dropdown-browsing-container  .ngd-search-input{
+  padding: 0px 5px;
+}
+.ngd-default .ngd-dropdown-browsing-container  .ngd-dropdown-results-container{
+  display: block;
+  list-style-type: none;
+  max-height: 400px;
+  margin: 0;
+  padding: 0;
+}
+.ngd-default .ngd-dropdown-browsing-container  .ngd-dropdown-results-container .ngd-dropdown-result{
+  transition: 200ms;
+  padding: 2px 5px;
+}
+.ngd-default .ngd-dropdown-browsing-container  .ngd-dropdown-results-container .ngd-dropdown-result:hover{
+  background: #eaeaea;
+  border-color: lightgray;
+}
+
+/* Helpers */
+.cursor-pointer{cursor: pointer!important;}
+
+/* Animations */
+.rotate-90{transform: rotate(90deg);}
+.transition{transition: 200ms}
+

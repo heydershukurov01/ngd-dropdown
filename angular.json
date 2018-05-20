@@ -116,6 +116,46 @@
           }
         }
       }
+    },
+    "ngd-dropdown": {
+      "root": "projects/ngd-dropdown",
+      "sourceRoot": "projects/ngd-dropdown/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngd-dropdown/tsconfig.lib.json",
+            "project": "projects/ngd-dropdown/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/ngd-dropdown/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngd-dropdown/src/test.ts",
+            "tsConfig": "projects/ngd-dropdown/tsconfig.spec.json",
+            "karmaConfig": "projects/ngd-dropdown/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngd-dropdown/tsconfig.lib.json",
+              "projects/ngd-dropdown/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "ng-dropdown"

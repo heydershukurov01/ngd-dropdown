@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {ClickOutsideDirective} from 'ng-click-outside/lib/click-outside.directive';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+  title = 'test version 2';
 }

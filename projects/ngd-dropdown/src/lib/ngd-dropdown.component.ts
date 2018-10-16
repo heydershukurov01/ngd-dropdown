@@ -4,62 +4,39 @@ import {ClickOutsideModule} from 'ng-click-outside';
  Author Heyder Shukurov
  Created 17.05.2018
  */
-const customValueProvider = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => NgdDropdownComponent),
-  multi: true
-};
-import {
-  Component, forwardRef, Input,
-  OnInit,
-} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-@Component({
+import * as core from '@angular/core';
+import * as initial from './const/initial-configs';
+@core.Component({
   selector: 'lib-ngd-dropdown',
   templateUrl: './ngd-dropdown.component.html',
   styleUrls: [`./icons/css/material-design-iconic-font.min.css`, `./ngd-dropdown.component.css`],
-  providers: [customValueProvider],
 })
-export class NgdDropdownComponent implements  ControlValueAccessor {
-  constructor() {}
+export class NgdDropdownComponent {
   toggle = false;
-  options = {
-    theme: 'default',
-  }
+  @core.Input() configs = initial.InitialConfigs;
+  @core.Input() options = [];
+  valueData: any;
+  values: any[] = [];
+  constructor() {}
+
   /**
-   * Main Data from Outside
-   * Value accessor
+   * Get options
+   * {any[]}
    */
-  _value = '';
-  propagateChange: any = () => {};
-  /**
-   * Write VALUE
-   */
-  writeValue(value: any) {
-    if ( value ) {
-      this._value = value;
-    }
+  @core.Input()
+  get value() {
+    return this.valueData;
   }
 
   /**
-   * Register On Change of value
+   * Emit options
+   * {EventEmitter<any>}
    */
-  registerOnChange(fn) {
-    this.propagateChange = fn;
+  @core.Output() valueChange: core.EventEmitter<any> = new core.EventEmitter<any>();
+  set value(value) {
+    this.valueData = value;
+    this.valueChange.emit(this.valueData);
   }
-
-  /**
-   * Trigger on Touched
-   */
-  registerOnTouched(fn: () => void): void { }
-
-  /**
-   * Update Value
-   */
-  onChange(event) {
-    this.propagateChange(event.target.value);
-  }
-
   /**
    * Toggles Dropdown
    */
@@ -72,5 +49,41 @@ export class NgdDropdownComponent implements  ControlValueAccessor {
    */
   closeDropdown(): void {
     this.toggle = false;
+  }
+
+  /**
+   * Options Selected
+   */
+  optionSelected(option: any): void {
+    let value = null;
+    if (this.configs.option.value) {
+      value = option[this.configs.option.value];
+    } else {
+      value = option;
+    }
+    this.setSelected(value);
+  }
+
+  /**
+   * Set Selected Value
+   * {Object | number | string} value
+   */
+  setSelected(value: Object | number | string): void {
+    if (this.configs.multiple) {
+      this.values = [...this.values , value ];
+      this.value = this.values;
+    } else {
+      this.values = [value];
+      this.value = value;
+    }
+  }
+
+  /**
+   * Unselect data from selected values
+   * {number} index
+   */
+  unselect(index: number): void {
+    this.values.splice(index, 1);
+    this.value = this.configs.multiple ? this.values : null;
   }
 }

@@ -15,6 +15,10 @@
   padding-left: 5px;
   padding-top: 2px;
   padding-bottom: 2px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start
 }
 .ngd-default .ngd-dropdown-view .ngd-action-container{
   width: 5%;
@@ -51,6 +55,18 @@
 .ngd-default .ngd-dropdown-browsing-container  .ngd-dropdown-results-container .ngd-dropdown-result:hover{
   background: #eaeaea;
   border-color: lightgray;
+}
+
+/* Select Badge */
+.ngd-default .ngd-dropdown-view .ngd-badge-container .ngd-dropdown-badge {
+  padding: 5px 2px 5px 10px;
+  background: #eaeaea;
+  margin: 2px;
+  margin-right: 5px;
+}
+.ngd-default .ngd-dropdown-view .ngd-badge-container .ngd-dropdown-badge .ngd-close {
+  background: transparent;
+  border: none;
 }
 
 /* Helpers */

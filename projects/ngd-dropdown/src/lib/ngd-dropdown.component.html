@@ -2,9 +2,9 @@
 <div [class]="'ngd-' + configs.theme" (clickOutside)="closeDropdown()">
   <div class="ngd-dropdown-view cursor-pointer" (click)="toggleDropdown()">
     <div class="ngd-badge-container">
-      <ng-container *ngFor="let selected of values; let index = index">
-        <span class="ngd-dropdown-badge">{{selected[configs.option.name]}} <button class="ngd-close zmdi zmdi-close" (click)="unselect(index)"></button></span>
-      </ng-container>
+        <ng-container *ngFor="let selected of configs.multiple ? value : [value]; let index = index">
+          <span class="ngd-dropdown-badge">{{selected[configs.option.name] ? selected[configs.option.name] : selected}} <button class="ngd-close zmdi zmdi-close" (click)="unselect(index)"></button></span>
+        </ng-container>
     </div>
     <div class="ngd-action-container">
       <i class="zmdi zmdi-chevron-right transition" [class.rotate-90]="toggle"></i>
@@ -12,10 +12,10 @@
   </div>
   <!-- Browser area -->
   <div class="ngd-dropdown-browsing-container cursor-pointer" *ngIf="toggle">
-      <input type="text" class="ngd-search-input" (input)="onChange($event)" [(ngModel)]="_value">
+      <input type="text" class="ngd-search-input" (input)="onChange($event)">
       <ul class="ngd-dropdown-results-container">
-        <ng-container *ngFor="let option of options">
-          <li class="ngd-dropdown-result" (click)="optionSelected(option)">{{option[configs.option.name]}}</li>
+        <ng-container *ngFor="let option of options; let index = index">
+          <li class="ngd-dropdown-result" (click)="optionSelected(option, index)">{{option[configs.option.name]}}</li>
         </ng-container>
       </ul>
   </div>

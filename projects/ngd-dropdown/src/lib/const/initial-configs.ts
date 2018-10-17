@@ -1,8 +1,8 @@
 export const InitialConfigs = {
   theme: 'default',
-  multiple: true,
+  multiple: false,
   option: {
     name: 'title',
-    value: null
+    value: 'title'
   }
 };

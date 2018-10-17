@@ -7,6 +7,9 @@ import {ClickOutsideDirective} from 'ng-click-outside/lib/click-outside.directiv
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'test version 2';
+  // Multiple
+  // title = [{title: 'Test Madafaka'}];
+  // Single
+  title = {title: 'Test Madafaka'};
   options = [{title: 'Test 1 '}, {title: 'Test 2'}, {title: 'Test 3'}, {title: 'Test 4'}];
 }

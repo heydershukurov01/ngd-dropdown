@@ -1,5 +1,6 @@
 export const InitialConfigs = {
   theme: 'default',
+  placeholder: 'Select',
   multiple: true,
   jsSearch: true,
   serverSearch: true,

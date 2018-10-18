@@ -5,6 +5,9 @@
         <ng-container *ngFor="let selected of configs.multiple ? value : [value]; let index = index">
           <span class="ngd-dropdown-badge">{{selected[configs.option.name] ? selected[configs.option.name] : selected}} <button class="ngd-close zmdi zmdi-close" (click)="unselect(index)"></button></span>
         </ng-container>
+        <ng-container *ngIf="configs.multiple ? value?.length === 0 : !value">
+          <span class="ngd-placeholder">{{configs?.placeholder}}</span>
+        </ng-container>
     </div>
     <div class="ngd-action-container">
       <i class="zmdi zmdi-chevron-right transition" [class.rotate-90]="toggle"></i>
@@ -15,7 +18,7 @@
       <input type="text" class="ngd-search-input" (input)="searched()" [(ngModel)]="term">
       <ul class="ngd-dropdown-results-container">
         <ng-container *ngFor="let option of options; let index = index">
-          <li class="ngd-dropdown-result" (click)="optionSelected(option, index)" [hidden]="!option.visible">
+          <li class="ngd-dropdown-result" (click)="optionSelected(option)" [hidden]="!option.visible">
             <ng-container *ngIf="configs.multiple">
               <input type="checkbox" [checked]="option.selected ? 'checked' : ''">
             </ng-container>

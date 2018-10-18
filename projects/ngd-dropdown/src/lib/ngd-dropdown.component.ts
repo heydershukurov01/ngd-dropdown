@@ -132,4 +132,7 @@ export class NgdDropdownComponent implements core.DoCheck {
       }, this.configs.searchTimeout)
     }
   }
+  log(data) {
+    console.log(data)
+  }
 }

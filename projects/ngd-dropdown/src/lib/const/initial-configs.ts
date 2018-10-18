@@ -1,4 +1,6 @@
-export const InitialConfigs = {
+import {NgdDropdownConfigs} from "../ngd-dropdown";
+
+export const InitialConfigs: NgdDropdownConfigs = {
   theme: 'default',
   placeholder: 'Select',
   multiple: true,

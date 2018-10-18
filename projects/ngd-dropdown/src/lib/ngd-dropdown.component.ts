@@ -6,7 +6,7 @@ import * as core      from '@angular/core';
 import * as initial   from './const/initial-configs';
 import * as model from "./const/models";
 @core.Component({
-  selector: 'lib-ngd-dropdown',
+  selector: 'ngd-dropdown',
   templateUrl: './ngd-dropdown.component.html',
   styleUrls: [`./icons/css/material-design-iconic-font.min.css`, `./ngd-dropdown.component.css`],
 })
@@ -36,11 +36,13 @@ export class NgdDropdownComponent implements core.DoCheck {
     this.valueChange.emit(this._valueData);
   }
   // Outputs
-  @core.Output() dropdownOpened: core.EventEmitter<string> = new core.EventEmitter<string>();
-  @core.Output() dropdownClosed: core.EventEmitter<string> = new core.EventEmitter<string>();
+  @core.Output() dropdownToggle: core.EventEmitter<boolean> = new core.EventEmitter<boolean>();
+  @core.Output() dropdownOpened: core.EventEmitter<void> = new core.EventEmitter<void>();
+  @core.Output() dropdownClosed: core.EventEmitter<void> = new core.EventEmitter<void>();
   @core.Output() selected: core.EventEmitter<any> = new core.EventEmitter<any>();
   @core.Output() unselected: core.EventEmitter<any> = new core.EventEmitter<any>();
   @core.Output() search: core.EventEmitter<string> = new core.EventEmitter<string>();
+  @core.Output() rawData: core.EventEmitter<any> = new core.EventEmitter<any>();
 
   public ngDoCheck() {
     this._setInitialValue()
@@ -58,8 +60,10 @@ export class NgdDropdownComponent implements core.DoCheck {
     this.toggle = !this.toggle;
     if (this.toggle) {
       this.dropdownOpened.emit()
+      this.dropdownToggle.emit(true);
     } else {
-      this.dropdownClosed.emit()
+      this.dropdownClosed.emit();
+      this.dropdownToggle.emit(false);
     }
   }
 
@@ -69,6 +73,7 @@ export class NgdDropdownComponent implements core.DoCheck {
   public closeDropdown(): void {
     this.toggle = false;
     this.dropdownClosed.emit()
+    this.dropdownToggle.emit(false);
   }
 
   /**
@@ -77,7 +82,8 @@ export class NgdDropdownComponent implements core.DoCheck {
   public optionSelected(option: any): void {
     if (this.configs.multiple) {
       if (!option.selected) {
-        this.selected.emit(option);
+        this.selected.emit(option[this.configs.option.value]);
+        this._emitRawData('selected', option);
         this.value = this.value && this.value.length ? [...this.value , option ] : [option];
       } else {
         let index: null;
@@ -103,13 +109,15 @@ export class NgdDropdownComponent implements core.DoCheck {
       this.options = this.options.map(option => {
         if (option[this.configs.option.value] === this.value[index][this.configs.option.value]) {
           option.selected = false;
-          this.unselected.emit(option);
+          this.unselected.emit(option[this.configs.option.value]);
+          this._emitRawData('unselected', option);
         }
         return option;
       });
       this.value.splice(index, 1);
     } else {
-      this.unselected.emit(this.value);
+      this.unselected.emit(this.value[this.configs.option.value]);
+      this._emitRawData('unselected', this.value);
       this.value = null;
     }
   }
@@ -132,7 +140,16 @@ export class NgdDropdownComponent implements core.DoCheck {
       }, this.configs.searchTimeout)
     }
   }
-  log(data) {
-    console.log(data)
+
+  /**
+   * Emit Raw Data
+   * {string} action
+   * payload
+   */
+  private _emitRawData(action: string, payload: any) {
+    const payloadData = Object.assign({}, payload);
+    delete payloadData.visible;
+    delete payloadData.selected;
+    this.rawData.emit({action, payloadData});
   }
 }

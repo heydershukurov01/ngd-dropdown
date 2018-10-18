@@ -38,8 +38,8 @@ export class Option {
     // Get count
     const valueCount = values && values.length ? values.length : 0;
     const optionsCount = options && options.length ? options.length : 0;
-    options = [...options, ...values];
     if(optionsCount > 0 && valueCount > 0) {
+      options = [...options, ...values];
       options = functions.unique(options, prop);
       // TODO: Simplify this
       options = options.map(option => {
@@ -53,6 +53,13 @@ export class Option {
         })
         return option;
       })
+    } else if(optionsCount > 0 && valueCount === 0) {
+      options = options.map(option => {
+        if (typeof option.visible === 'undefined') {
+          option.visible = true;
+        }
+        return option;
+      });
     }
     this.options = options;
     this.values = values;
@@ -75,7 +82,7 @@ export class Option {
   }
   // Helpers
   private _activateValues(values): any[] | any {
-    if (values && values.length) {
+    if (values && values.length && values.length > 0) {
       values = values.map(value => {value.selected = true; return value});
     }
     return values;

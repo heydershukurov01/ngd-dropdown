@@ -12,10 +12,14 @@
   </div>
   <!-- Browser area -->
   <div class="ngd-dropdown-browsing-container cursor-pointer" *ngIf="toggle">
-      <input type="text" class="ngd-search-input" (input)="onChange($event)">
+      <input type="text" class="ngd-search-input" (input)="searched()" [(ngModel)]="term">
       <ul class="ngd-dropdown-results-container">
         <ng-container *ngFor="let option of options; let index = index">
-          <li class="ngd-dropdown-result" (click)="optionSelected(option, index)">{{option[configs.option.name]}}</li>
+          <li class="ngd-dropdown-result" (click)="optionSelected(option, index)" [hidden]="!option.visible">
+            <ng-container *ngIf="configs.multiple">
+              <input type="checkbox" [checked]="option.selected ? 'checked' : ''">
+            </ng-container>
+            {{option[configs.option.name]}}</li>
         </ng-container>
       </ul>
   </div>

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {ClickOutsideDirective} from 'ng-click-outside/lib/click-outside.directive';
 
 @Component({
   selector: 'app-root',

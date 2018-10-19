@@ -28,7 +28,7 @@
   width: 5%;
   text-align: right;
   padding-right: 5px;
-  padding-top: 10px;
+  padding-top: 5px;
   padding-bottom: 2px;
 }
 /* Hidden browser */
@@ -71,11 +71,15 @@
 .ngd-default .ngd-dropdown-view .ngd-badge-container .ngd-dropdown-badge .ngd-close {
   background: transparent;
   border: none;
+  padding: 1px 2px;
 }
 
 /* Helpers */
 .cursor-pointer{cursor: pointer!important;}
-
+.ngd-square{border: none; background: transparent}
+.ngd-font-20{
+  font-size: 20px
+}
 /* Animations */
 .rotate-90{transform: rotate(90deg);}
 .transition{transition: 200ms;}

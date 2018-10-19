@@ -1,10 +1,10 @@
 <!-- Selected Data will be present here -->
-<div [class]="'ngd-' + configs?.theme" (clickOutside)="closeDropdown()">
+<div [class]="'ngd-' + configs?.theme" >
   <div class="ngd-dropdown-view cursor-pointer" (click)="toggleDropdown()">
     <div class="ngd-badge-container">
         <ng-container *ngIf="configs?.multiple ? value?.length > 0 : value">
           <ng-container *ngFor="let selected of configs?.multiple ? value : [value]; let index = index">
-            <span class="ngd-dropdown-badge">{{selected[configs?.option?.name] ? selected[configs?.option?.name] : selected}} <button class="ngd-close zmdi zmdi-close" (click)="unselect(index)"></button></span>
+            <span class="ngd-dropdown-badge">{{selected[configs?.option?.name] ? selected[configs?.option?.name] : selected}} <button class="ngd-close ngd-font-20" (click)="unselect(index)">&times;</button></span>
           </ng-container>
         </ng-container>
         <ng-container *ngIf="configs?.multiple ? !value || value?.length === 0 : !value">
@@ -12,7 +12,7 @@
         </ng-container>
     </div>
     <div class="ngd-action-container">
-      <i class="zmdi zmdi-chevron-right transition" [class.rotate-90]="toggle"></i>
+      <button class=" transition ngd-square ngd-font-20" [class.rotate-90]="toggle">&rsaquo;</button>
     </div>
   </div>
   <!-- Browser area -->

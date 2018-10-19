@@ -2,13 +2,13 @@
  Author Heyder Shukurov
  Created 17.05.2018
  */
-import * as core      from '@angular/core';
-import * as initial   from './const/initial-configs';
-import * as model from "./const/models";
+import * as core from '@angular/core';
+import * as initial from './const/initial-configs';
+import * as model from './const/models';
 @core.Component({
   selector: 'ngd-dropdown',
   templateUrl: './ngd-dropdown.component.html',
-  styleUrls: [`./icons/css/material-design-iconic-font.min.css`, `./ngd-dropdown.component.css`],
+  styleUrls: [`./ngd-dropdown.component.css`],
 })
 export class NgdDropdownComponent implements core.DoCheck {
   public toggle = false;
@@ -16,7 +16,7 @@ export class NgdDropdownComponent implements core.DoCheck {
   @core.Input() public options = [];
   private _valueData: any;
   private _searchTimeout: any;
-  public term: string = '';
+  public term = '';
   /**
    * Get value
    * {any[] | any}
@@ -45,7 +45,7 @@ export class NgdDropdownComponent implements core.DoCheck {
   @core.Output() rawData: core.EventEmitter<any> = new core.EventEmitter<any>();
 
   public ngDoCheck() {
-    this._setInitialValue()
+    this._setInitialValue();
   }
 
   private _setInitialValue() {

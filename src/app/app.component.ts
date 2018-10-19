@@ -10,7 +10,7 @@ export class AppComponent {
   title = [{title: 'Test Madafaka'}];
   // Single
   // title = {title: 'Test Madafaka'};
-  options = [{title: 'Test 1 '}, {title: 'Test 2'}, {title: 'Test 3'}, {title: 'Test 4'},{title: 'Test Madafaka'}];
+  options = [{text: 'Test 1 ', id: 1}, {text: 'Test 2', id: 2}, {text: 'Test 3', id: 3}, {text: 'Test 4', id: 4}, {text: 'Test 5', id: 5}];
   constructor() {
     setTimeout(() => {
       this.title.push({title: 'Test Madafaka2'});

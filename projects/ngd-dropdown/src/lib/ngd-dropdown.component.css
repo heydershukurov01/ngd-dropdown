@@ -56,7 +56,7 @@
   transition: 200ms;
   padding: 2px 5px;
 }
-.ngd-default .ngd-dropdown-browsing-container  .ngd-dropdown-results-container .ngd-dropdown-result:hover{
+.ngd-default .ngd-dropdown-browsing-container  .ngd-dropdown-results-container .ngd-dropdown-result:hover , .ngd-default .ngd-dropdown-browsing-container  .ngd-dropdown-results-container .ngd-dropdown-result.selected{
   background: #eaeaea;
   border-color: lightgray;
 }

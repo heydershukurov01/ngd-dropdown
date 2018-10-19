@@ -2,18 +2,18 @@
  Author Heyder Shukurov
  Created 17.05.2018
  */
-import * as core from '@angular/core';
 import * as initial from './const/initial-configs';
 import * as model from './const/models';
-@core.Component({
+import {Component, DoCheck, EventEmitter, Input, Output} from '@angular/core';
+@Component({
   selector: 'ngd-dropdown',
   templateUrl: './ngd-dropdown.component.html',
   styleUrls: [`./ngd-dropdown.component.css`],
 })
-export class NgdDropdownComponent implements core.DoCheck {
+export class NgdDropdownComponent implements DoCheck {
   public toggle = false;
-  @core.Input() public configs = initial.InitialConfigs;
-  @core.Input() public options = [];
+  @Input() public configs = initial.InitialConfigs;
+  @Input() public options = [];
   private _valueData: any;
   private _searchTimeout: any;
   public term = '';
@@ -21,7 +21,7 @@ export class NgdDropdownComponent implements core.DoCheck {
    * Get value
    * {any[] | any}
    */
-  @core.Input()
+  @Input()
   get value() {
     return this._valueData;
   }
@@ -30,19 +30,19 @@ export class NgdDropdownComponent implements core.DoCheck {
    * Emit value
    * {EventEmitter<any[] | any>}
    */
-  @core.Output() valueChange: core.EventEmitter<any | any[]> = new core.EventEmitter<any | any[]>();
+  @Output() valueChange: EventEmitter<any | any[]> = new EventEmitter<any | any[]>();
   set value(value) {
     this._valueData = value;
     this.valueChange.emit(this._valueData);
   }
   // Outputs
-  @core.Output() dropdownToggle: core.EventEmitter<boolean> = new core.EventEmitter<boolean>();
-  @core.Output() dropdownOpened: core.EventEmitter<void> = new core.EventEmitter<void>();
-  @core.Output() dropdownClosed: core.EventEmitter<void> = new core.EventEmitter<void>();
-  @core.Output() selected: core.EventEmitter<any> = new core.EventEmitter<any>();
-  @core.Output() unselected: core.EventEmitter<any> = new core.EventEmitter<any>();
-  @core.Output() search: core.EventEmitter<string> = new core.EventEmitter<string>();
-  @core.Output() rawData: core.EventEmitter<any> = new core.EventEmitter<any>();
+  @Output() dropdownToggle: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() dropdownOpened: EventEmitter<void> = new EventEmitter<void>();
+  @Output() dropdownClosed: EventEmitter<void> = new EventEmitter<void>();
+  @Output() selected: EventEmitter<any> = new EventEmitter<any>();
+  @Output() unselected: EventEmitter<any> = new EventEmitter<any>();
+  @Output() search: EventEmitter<string> = new EventEmitter<string>();
+  @Output() rawData: EventEmitter<any> = new EventEmitter<any>();
 
   public ngDoCheck() {
     this._setInitialValue();
@@ -96,7 +96,25 @@ export class NgdDropdownComponent implements core.DoCheck {
         this.unselect(index);
       }
     } else {
-      this.value = option;
+      if (!option.selected) {
+        this.value = option;
+        this.selected.emit(option[this.configs.option.value]);
+        this._emitRawData('selected', option);
+        option.selected = true;
+        this.options = this.options.map( item => {
+          item.selected = item[this.configs.option.value] === option[this.configs.option.value]
+          return item;
+        });
+      } else {
+        this.value = null;
+        this.selected.emit(option[this.configs.option.value]);
+        this._emitRawData('unselected', option);
+        this.options = this.options.map( item => {
+          item.selected = false;
+          return item;
+        });
+        option.selected = false;
+      }
     };
   }
 
@@ -130,14 +148,14 @@ export class NgdDropdownComponent implements core.DoCheck {
         } else {
           option.visible = false;
         }
-        return option
-      })
+        return option;
+      });
     }
     if (this.configs.serverSearch) {
       clearTimeout(this._searchTimeout);
       this._searchTimeout = setTimeout(() => {
         this.search.emit(this.term);
-      }, this.configs.searchTimeout)
+      }, this.configs.searchTimeout);
     }
   }
 

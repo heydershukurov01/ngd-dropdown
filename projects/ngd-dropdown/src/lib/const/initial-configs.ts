@@ -15,7 +15,7 @@ export interface NgdDropdownConfigs {
 export const InitialConfigs: NgdDropdownConfigs = {
   theme: 'default',
   placeholder: 'Select item',
-  multiple: false,
+  multiple: true,
   jsSearch: false,
   serverSearch: false,
   searchTimeout: 200,

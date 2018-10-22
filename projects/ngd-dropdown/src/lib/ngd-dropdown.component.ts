@@ -4,15 +4,28 @@
  */
 import * as initial from './const/initial-configs';
 import * as model from './const/models';
-import {Component, DoCheck, EventEmitter, Input, Output} from '@angular/core';
+import {Component, DoCheck, EventEmitter, forwardRef, Input, Output} from '@angular/core';
+import {FormGroup} from '@angular/forms';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+
+const customValueProvider = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => NgdDropdownComponent),
+  multi: true
+};
+
 @Component({
   selector: 'ngd-dropdown',
   templateUrl: './ngd-dropdown.component.html',
   styleUrls: [`./ngd-dropdown.component.css`],
+  providers: [customValueProvider],
 })
-export class NgdDropdownComponent implements DoCheck {
+export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
   public toggle = false;
   @Input() public configs = initial.InitialConfigs;
+  @Input() public options = [];
+  @Input() public fgroup: FormGroup;
+  @Input() public name: string;
   @Input() public options = [];
   private _valueData: any;
   private _searchTimeout: any;
@@ -34,6 +47,7 @@ export class NgdDropdownComponent implements DoCheck {
   set value(value) {
     this._valueData = value;
     this.valueChange.emit(this._valueData);
+    this.propagateChange(value);
   }
   // Outputs
   @Output() dropdownToggle: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -43,10 +57,31 @@ export class NgdDropdownComponent implements DoCheck {
   @Output() unselected: EventEmitter<any> = new EventEmitter<any>();
   @Output() search: EventEmitter<string> = new EventEmitter<string>();
   @Output() rawData: EventEmitter<any> = new EventEmitter<any>();
-
+  public propagateChange: any = () => {};
   public ngDoCheck() {
     this._setInitialValue();
   }
+
+  /**
+   * Write VALUE
+   */
+  writeValue(value: any) {
+    if ( value ) {
+      this.value = value;
+    }
+  }
+
+  /**
+   * Register On Change of value
+   */
+  registerOnChange(fn) {
+    this.propagateChange = fn;
+  }
+
+  /**
+   * Trigger on Touched
+   */
+  registerOnTouched(fn: () => void): void { }
 
   private _setInitialValue() {
     const reformedValues = new model.Option(this.value, this.options, this.configs);
@@ -59,7 +94,7 @@ export class NgdDropdownComponent implements DoCheck {
   public toggleDropdown(): void {
     this.toggle = !this.toggle;
     if (this.toggle) {
-      this.dropdownOpened.emit()
+      this.dropdownOpened.emit();
       this.dropdownToggle.emit(true);
     } else {
       this.dropdownClosed.emit();
@@ -72,7 +107,7 @@ export class NgdDropdownComponent implements DoCheck {
    */
   public closeDropdown(): void {
     this.toggle = false;
-    this.dropdownClosed.emit()
+    this.dropdownClosed.emit();
     this.dropdownToggle.emit(false);
   }
 
@@ -92,7 +127,7 @@ export class NgdDropdownComponent implements DoCheck {
           if (option[this.configs.option.value] === value[this.configs.option.value]) {
             index = i;
           }
-        })
+        });
         this.unselect(index);
       }
     } else {
@@ -102,7 +137,7 @@ export class NgdDropdownComponent implements DoCheck {
         this._emitRawData('selected', option);
         option.selected = true;
         this.options = this.options.map( item => {
-          item.selected = item[this.configs.option.value] === option[this.configs.option.value]
+          item.selected = item[this.configs.option.value] === option[this.configs.option.value];
           return item;
         });
       } else {
@@ -115,7 +150,7 @@ export class NgdDropdownComponent implements DoCheck {
         });
         option.selected = false;
       }
-    };
+    }
   }
 
   /**
@@ -133,10 +168,14 @@ export class NgdDropdownComponent implements DoCheck {
         return option;
       });
       this.value.splice(index, 1);
+      if (!this.value || this.value.length === 0) {
+        this.propagateChange(null);
+      }
     } else {
       this.unselected.emit(this.value[this.configs.option.value]);
       this._emitRawData('unselected', this.value);
       this.value = null;
+      this.propagateChange(null);
     }
   }
 
@@ -144,9 +183,9 @@ export class NgdDropdownComponent implements DoCheck {
     if (this.configs.jsSearch) {
       this.options = this.options.map(option => {
         if (option[this.configs.option.name].indexOf(this.term) > -1) {
-          option.visible = true;
+          option['visible'] = true;
         } else {
-          option.visible = false;
+          option['visible'] = false;
         }
         return option;
       });
@@ -166,8 +205,8 @@ export class NgdDropdownComponent implements DoCheck {
    */
   private _emitRawData(action: string, payload: any) {
     const payloadData = Object.assign({}, payload);
-    delete payloadData.visible;
-    delete payloadData.selected;
+    delete payloadData['visible'];
+    delete payloadData['selected'];
     this.rawData.emit({action, payloadData});
   }
 }

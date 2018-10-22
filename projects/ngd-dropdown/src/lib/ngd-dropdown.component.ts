@@ -24,9 +24,6 @@ export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
   public toggle = false;
   @Input() public configs = initial.InitialConfigs;
   @Input() public options = [];
-  @Input() public fgroup: FormGroup;
-  @Input() public name: string;
-  @Input() public options = [];
   private _valueData: any;
   private _searchTimeout: any;
   public term = '';
@@ -57,7 +54,9 @@ export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
   @Output() unselected: EventEmitter<any> = new EventEmitter<any>();
   @Output() search: EventEmitter<string> = new EventEmitter<string>();
   @Output() rawData: EventEmitter<any> = new EventEmitter<any>();
+
   public propagateChange: any = () => {};
+
   public ngDoCheck() {
     this._setInitialValue();
   }

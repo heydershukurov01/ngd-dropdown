@@ -1,6 +1,6 @@
 {
   "name": "ngd-dropdown",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Exception handler for Angular Applications",
   "keywords": ["angular", "typescript", "dropdown", "multiselect", "multiselect-dropdown", "select"],
   "peerDependencies": {

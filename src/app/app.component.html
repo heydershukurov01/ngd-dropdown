@@ -1,3 +1,6 @@
-<ngd-dropdown [options]="options" (search)="log($event)" (rawData)="log($event)"></ngd-dropdown>
+<form [formGroup]="form">
+  <ngd-dropdown [options]="options" (search)="log($event)" (rawData)="log($event)" [formControlName]="'select'"></ngd-dropdown>
+  <button type="submit" [disabled]="form.invalid">Submit</button>
+</form>
 
 

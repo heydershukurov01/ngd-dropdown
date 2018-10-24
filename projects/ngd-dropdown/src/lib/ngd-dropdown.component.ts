@@ -85,6 +85,7 @@ export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
   private _setInitialValue() {
     const reformedValues = new model.Option(this.value, this.options, this.configs);
     this.options = reformedValues.options;
+
   }
 
   /**

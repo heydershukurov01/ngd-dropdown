@@ -18,8 +18,8 @@
       <input type="text" class="ngd-search-input" (input)="searched()" [(ngModel)]="term" *ngIf="configs?.jsSearch || configs?.serverSearch">
       <ul class="ngd-dropdown-results-container">
         <ng-container *ngIf="options && options.length > 0">
-          <li class="ngd-dropdown-result"  *ngIf="configs.selectAll && configs.multiple">
-            <input type="checkbox" [checked]="option?.selected ? 'checked' : ''"> {{configs.selectAllText}}
+          <li class="ngd-dropdown-result"  *ngIf="configs.selectAll && configs.multiple" (click)="selectAllData()">
+            <input type="checkbox" [checked]="selectAllToggle ? 'checked' : ''"> {{configs.selectAllText}}
           </li>
           <ng-container *ngFor="let option of options; let index = index">
             <li class="ngd-dropdown-result" (click)="optionSelected(option)" [hidden]="!option?.visible" [class.selected]="option?.selected">

@@ -5,8 +5,10 @@ export class Option {
    */
   public options: any[] = [];
   public values: any[] = [];
+  public selectedAll = false;
   constructor(value: any | any[], options: any[], configs) {
     this._selectCandidates(value, options, configs);
+    this.selectedAll = this.values.length === this.options.length;
   }
   private _selectCandidates(value, options, configs) {
     this.values = [];

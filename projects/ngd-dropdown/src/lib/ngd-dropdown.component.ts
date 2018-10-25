@@ -26,14 +26,17 @@ export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
   public localValue: any = [];
   @Input() public configs = initial.InitialConfigs;
   @Input() public options = [];
-  private _searchTimeout: any;
   public term = '';
+  private _searchTimeout: any;
+  public selectAllToggle = false;
   // Outputs
   @Output() dropdownToggle: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() dropdownOpened: EventEmitter<void> = new EventEmitter<void>();
   @Output() dropdownClosed: EventEmitter<void> = new EventEmitter<void>();
   @Output() selected: EventEmitter<any> = new EventEmitter<any>();
   @Output() unselected: EventEmitter<any> = new EventEmitter<any>();
+  @Output() allSelected: EventEmitter<any> = new EventEmitter<any>();
+  @Output() allUnSelected: EventEmitter<any> = new EventEmitter<any>();
   @Output() search: EventEmitter<string> = new EventEmitter<string>();
   @Output() rawData: EventEmitter<any> = new EventEmitter<any>();
   /**
@@ -68,9 +71,9 @@ export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
 
   private _setInitialValue() {
     const reformedValues = new model.Option(this.globalValue, this.options, this.configs);
-    console.log(reformedValues)
     this.options = reformedValues.options;
     this.localValue = reformedValues.values;
+    this.selectAllToggle = reformedValues.selectedAll;
   }
 
   /**
@@ -220,5 +223,29 @@ export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
         this.globalValue = null;
       }
     this.propagateChange(this.globalValue);
+  }
+
+  /**
+   * Select all
+   */
+  public selectAllData() {
+    this.selectAllToggle = !this.selectAllToggle;
+    this.options = this.options.map(
+      option => {
+        option.selected = this.selectAllToggle;
+        return option;
+      }
+    );
+    this.localValue =  this.selectAllToggle ? this.options : [];
+    this._valueProcessor(this.localValue);
+    this._emitRawData(this.selectAllToggle ? 'allSelected' : 'allUnSelected', this.localValue);
+    if (this.selectAllToggle) {
+      const payloadData: {visible?: boolean, selected?: boolean} = Object.assign({}, this.localValue);
+      delete payloadData.visible;
+      delete payloadData.selected;
+      this.allSelected.emit(payloadData);
+    } else {
+      this.allSelected.emit([]);
+    }
   }
 }

@@ -84,8 +84,8 @@ export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
 
   private _setInitialValue() {
     const reformedValues = new model.Option(this.value, this.options, this.configs);
+    console.log(reformedValues);
     this.options = reformedValues.options;
-
   }
 
   /**
@@ -119,7 +119,9 @@ export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
       if (!option.selected) {
         this.selected.emit(option[this.configs.option.value]);
         this._emitRawData('selected', option);
-        this.value = this.value && this.value.length ? [...this.value , option ] : [option];
+        const v = this.value && this.value.length ? [...this.value , option ] : [option];
+
+        this.value = v;
       } else {
         let index: null;
         option.selected = false;
@@ -204,9 +206,9 @@ export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
    * payload
    */
   private _emitRawData(action: string, payload: any) {
-    const payloadData = Object.assign({}, payload);
-    delete payloadData['visible'];
-    delete payloadData['selected'];
+    const payloadData: {visible?: boolean, selected?: boolean} = Object.assign({}, payload);
+    delete payloadData.visible;
+    delete payloadData.selected;
     this.rawData.emit({action, payloadData});
   }
 }

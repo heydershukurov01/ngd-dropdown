@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { NgdDropdownComponent } from './ngd-dropdown.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
-    ReactiveFormsModule
+    FormsModule
   ],
   declarations: [NgdDropdownComponent],
   exports: [NgdDropdownComponent]

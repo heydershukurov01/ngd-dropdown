@@ -5,7 +5,6 @@
 import * as initial from './const/initial-configs';
 import * as model from './const/models';
 import {Component, DoCheck, EventEmitter, forwardRef, Input, Output} from '@angular/core';
-import {FormGroup} from '@angular/forms';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 const customValueProvider = {

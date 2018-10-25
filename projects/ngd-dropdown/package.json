@@ -4,8 +4,8 @@
   "description": "Exception handler for Angular Applications",
   "keywords": ["angular", "typescript", "dropdown", "multiselect", "multiselect-dropdown", "select"],
   "peerDependencies": {
-    "@angular/common": "^7.0.0-rc.0 || ^7.0.0",
-    "@angular/core": "^7.0.0-rc.0 || ^7.0.0"
+    "@angular/common": "^6.0.0-rc.0 || ^7.0.0",
+    "@angular/core": "^6.0.0-rc.0 || ^7.0.0"
   },
   "homepage": "https://github.com/heydershukurov01/ngd-dropdown",
   "bugs": { "url" : "https://github.com/heydershukurov01/ngd-dropdown/issues"

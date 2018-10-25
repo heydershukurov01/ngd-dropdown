@@ -1,6 +1,9 @@
 export interface NgdDropdownConfigs {
   theme: 'default';
   placeholder: string;
+  noData: string;
+  selectAll: boolean;
+  selectAllText: string;
   multiple: boolean;
   jsSearch: boolean;
   serverSearch: boolean;
@@ -15,6 +18,9 @@ export interface NgdDropdownConfigs {
 export const InitialConfigs: NgdDropdownConfigs = {
   theme: 'default',
   placeholder: 'Select item',
+  noData: 'No data found!',
+  selectAll: true,
+  selectAllText: 'Select all',
   multiple: true,
   jsSearch: false,
   serverSearch: false,

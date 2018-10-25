@@ -5,7 +5,6 @@
 import * as initial from './const/initial-configs';
 import * as model from './const/models';
 import {Component, DoCheck, EventEmitter, forwardRef, Input, Output} from '@angular/core';
-import {FormGroup} from '@angular/forms';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 const customValueProvider = {
@@ -19,33 +18,16 @@ const customValueProvider = {
   templateUrl: './ngd-dropdown.component.html',
   styleUrls: [`./ngd-dropdown.component.css`],
   providers: [customValueProvider],
+
 })
 export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
   public toggle = false;
+  public globalValue: any = [];
+  public localValue: any = [];
   @Input() public configs = initial.InitialConfigs;
   @Input() public options = [];
-  private _valueData: any;
   private _searchTimeout: any;
   public term = '';
-  /**
-   * Get value
-   * {any[] | any}
-   */
-  @Input()
-  get value() {
-    return this._valueData;
-  }
-
-  /**
-   * Emit value
-   * {EventEmitter<any[] | any>}
-   */
-  @Output() valueChange: EventEmitter<any | any[]> = new EventEmitter<any | any[]>();
-  set value(value) {
-    this._valueData = value;
-    this.valueChange.emit(this._valueData);
-    this.propagateChange(value);
-  }
   // Outputs
   @Output() dropdownToggle: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() dropdownOpened: EventEmitter<void> = new EventEmitter<void>();
@@ -54,7 +36,9 @@ export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
   @Output() unselected: EventEmitter<any> = new EventEmitter<any>();
   @Output() search: EventEmitter<string> = new EventEmitter<string>();
   @Output() rawData: EventEmitter<any> = new EventEmitter<any>();
-
+  /**
+   * Propogate  changes to value
+   */
   public propagateChange: any = () => {};
 
   public ngDoCheck() {
@@ -66,7 +50,7 @@ export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
    */
   writeValue(value: any) {
     if ( value ) {
-      this.value = value;
+      this.globalValue = value;
     }
   }
 
@@ -83,9 +67,10 @@ export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
   registerOnTouched(fn: () => void): void { }
 
   private _setInitialValue() {
-    const reformedValues = new model.Option(this.value, this.options, this.configs);
-    console.log(reformedValues);
+    const reformedValues = new model.Option(this.globalValue, this.options, this.configs);
+    console.log(reformedValues)
     this.options = reformedValues.options;
+    this.localValue = reformedValues.values;
   }
 
   /**
@@ -119,13 +104,12 @@ export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
       if (!option.selected) {
         this.selected.emit(option[this.configs.option.value]);
         this._emitRawData('selected', option);
-        const v = this.value && this.value.length ? [...this.value , option ] : [option];
-
-        this.value = v;
+        this.localValue = this.localValue && this.localValue.length ? [...this.localValue , option ] : [option];
+        this._valueProcessor(this.localValue);
       } else {
         let index: null;
         option.selected = false;
-        this.value.map((value, i) => {
+        this.localValue.map((value, i) => {
           if (option[this.configs.option.value] === value[this.configs.option.value]) {
             index = i;
           }
@@ -134,7 +118,7 @@ export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
       }
     } else {
       if (!option.selected) {
-        this.value = option;
+        this.localValue = option;
         this.selected.emit(option[this.configs.option.value]);
         this._emitRawData('selected', option);
         option.selected = true;
@@ -142,8 +126,9 @@ export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
           item.selected = item[this.configs.option.value] === option[this.configs.option.value];
           return item;
         });
+        this._valueProcessor(this.localValue);
       } else {
-        this.value = null;
+        this.localValue = null;
         this.selected.emit(option[this.configs.option.value]);
         this._emitRawData('unselected', option);
         this.options = this.options.map( item => {
@@ -151,6 +136,7 @@ export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
           return item;
         });
         option.selected = false;
+        this._valueProcessor(null);
       }
     }
   }
@@ -162,22 +148,24 @@ export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
   public unselect(index: number = null): void {
     if (this.configs.multiple) {
       this.options = this.options.map(option => {
-        if (option[this.configs.option.value] === this.value[index][this.configs.option.value]) {
+        if (option[this.configs.option.value] === this.localValue[index][this.configs.option.value]) {
           option.selected = false;
           this.unselected.emit(option[this.configs.option.value]);
           this._emitRawData('unselected', option);
         }
         return option;
       });
-      this.value.splice(index, 1);
-      if (!this.value || this.value.length === 0) {
-        this.propagateChange(null);
+      this.localValue.splice(index, 1);
+      if (!this.localValue || this.localValue.length === 0) {
+        this._valueProcessor([]);
+      } else {
+        this._valueProcessor(this.localValue);
       }
     } else {
-      this.unselected.emit(this.value[this.configs.option.value]);
-      this._emitRawData('unselected', this.value);
-      this.value = null;
-      this.propagateChange(null);
+      this.unselected.emit(this.localValue[this.configs.option.value]);
+      this._emitRawData('unselected', this.localValue);
+      this.localValue = null;
+      this._valueProcessor(null);
     }
   }
 
@@ -210,5 +198,27 @@ export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
     delete payloadData.visible;
     delete payloadData.selected;
     this.rawData.emit({action, payloadData});
+  }
+
+  /**
+   * Process value
+   * value
+   * {any}
+   * private
+   */
+  private _valueProcessor(values) {
+      if (values) {
+        this.globalValue = this.configs.multiple ? values.map(
+          value => {
+            if (value && value[this.configs.option.value]) {
+              return value[this.configs.option.value];
+            }
+            return null;
+          }
+        ) : values[this.configs.option.value];
+      } else {
+        this.globalValue = null;
+      }
+    this.propagateChange(this.globalValue);
   }
 }

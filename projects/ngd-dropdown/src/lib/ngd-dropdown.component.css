@@ -12,7 +12,8 @@
 }
 .ngd-placeholder{
   color: gray;
-  padding-top: 8px;
+  padding-top: 5px;
+  font-family: "Segoe UI" , Helvetica;
 }
 .ngd-default .ngd-dropdown-view .ngd-badge-container{
   width: 95%;
@@ -79,6 +80,15 @@
 .ngd-square{border: none; background: transparent}
 .ngd-font-20{
   font-size: 20px
+}
+.center-t{
+  text-align: center;
+}
+.ngd-no-data-found{
+  padding: 10px;
+  cursor: not-allowed;
+  font-family: "Segoe UI" , Helvetica;
+  color: gray;
 }
 /* Animations */
 .rotate-90{transform: rotate(90deg);}

@@ -6,9 +6,10 @@ Changelog
   - Select all button
   - Now only selected option's value is emitted (before it was selected object)
   - New configs (checkout for more)
+  - New Outputs
   - Minor Bug Fixes
   - Performance upgrade
-
+  
 ## Current Version (0.1.0)
 Changelog
   - Support for Angular version 7

@@ -105,10 +105,10 @@ export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
   public optionSelected(option: any): void {
     if (this.configs.multiple) {
       if (!option.selected) {
-        this.selected.emit(option[this.configs.option.value]);
-        this._emitRawData('selected', option);
         this.localValue = this.localValue && this.localValue.length ? [...this.localValue , option ] : [option];
         this._valueProcessor(this.localValue);
+        this.selected.emit(option[this.configs.option.value]);
+        this._emitRawData('selected', option);
       } else {
         let index: null;
         option.selected = false;
@@ -122,7 +122,6 @@ export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
     } else {
       if (!option.selected) {
         this.localValue = option;
-        this.selected.emit(option[this.configs.option.value]);
         this._emitRawData('selected', option);
         option.selected = true;
         this.options = this.options.map( item => {
@@ -130,9 +129,9 @@ export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
           return item;
         });
         this._valueProcessor(this.localValue);
+        this.selected.emit(option[this.configs.option.value]);
       } else {
         this.localValue = null;
-        this.selected.emit(option[this.configs.option.value]);
         this._emitRawData('unselected', option);
         this.options = this.options.map( item => {
           item.selected = false;
@@ -140,6 +139,7 @@ export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
         });
         option.selected = false;
         this._valueProcessor(null);
+        this.selected.emit(option[this.configs.option.value]);
       }
     }
   }
@@ -237,8 +237,6 @@ export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
       }
     );
     this.localValue =  this.selectAllToggle ? this.options : [];
-    this._valueProcessor(this.localValue);
-    this._emitRawData(this.selectAllToggle ? 'allSelected' : 'allUnSelected', this.localValue);
     if (this.selectAllToggle) {
       const payloadData: {visible?: boolean, selected?: boolean} = Object.assign({}, this.localValue);
       delete payloadData.visible;
@@ -247,5 +245,7 @@ export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
     } else {
       this.allSelected.emit([]);
     }
+    this._valueProcessor(this.localValue);
+    this._emitRawData(this.selectAllToggle ? 'allSelected' : 'allUnSelected', this.localValue);
   }
 }

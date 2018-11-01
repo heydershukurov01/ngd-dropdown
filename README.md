@@ -5,7 +5,7 @@
 Changelog
   - Select all button
   - Now only selected option's value is emitted (before it was selected object)
-  - New configs (checkout for more)
+  - New configs (checkout for [more](#configurations-configs))
   - New Outputs
   - Minor Bug Fixes
   - Performance upgrade

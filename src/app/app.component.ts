@@ -21,12 +21,14 @@ export class AppComponent {
     //   console.log(this.title, 'Outside');
     // }, 3000);
     this.form = this.fb.group({
-      select: ['', Validators.required]
+      select: ['', Validators.required],
+      name: ['']
     });
   }
   log(data) {
-    console.log(data);
-    console.log(this.title);
     this.http.get('https://jsonplaceholder.typicode.com/posts/' + this.title).subscribe();
+  }
+  submitted() {
+    console.log(this.form.value);
   }
 }

@@ -1,6 +1,7 @@
-<!--<form [formGroup]="form">-->
-  <ngd-dropdown [options]="options" (search)="log($event)" (selected)="log($event)" [(ngModel)]="title"></ngd-dropdown>
-  <!--<button type="submit" [disabled]="form.invalid">Submit</button>-->
-<!--</form>-->
+<form [formGroup]="form" (submit)="submitted()">
+  <input type="text" formControlName="name" (keyup.enter)="submitted()">
+  <ngd-dropdown [options]="options" (search)="log($event)" (selected)="log($event)" formControlName="select"></ngd-dropdown>
+  <button type="submit" [disabled]="form.invalid">Submit</button>
+</form>
 
 

@@ -79,7 +79,7 @@ export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
   /**
    * Toggles Dropdown
    */
-  public toggleDropdown(): void {
+  public toggleDropdown(event): void {
     this.toggle = !this.toggle;
     if (this.toggle) {
       this.dropdownOpened.emit();

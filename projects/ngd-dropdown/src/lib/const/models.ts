@@ -19,7 +19,7 @@ export class Option {
             Object.assign(option, {visible: true});
             Object.assign(option, {selected: false});
             for (let index = 0; index < value.length; index++) {
-              if ( value[index] == option[configs.option.value]) {
+              if ( String(value[index]) === String(option[configs.option.value])) {
                 option.selected = true;
                 this.values = [...this.values, option];
               }
@@ -31,7 +31,7 @@ export class Option {
         this.options = options.map(option => {
           Object.assign(option, {visible: true});
           Object.assign(option, {selected: false});
-          if ( value == option[configs.option.value]) {
+          if ( String(value) === String(option[configs.option.value])) {
             option.selected = true;
             this.values = [...this.values, option];
           }

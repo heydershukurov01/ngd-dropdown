@@ -21,12 +21,12 @@ export const InitialConfigs: NgdDropdownConfigs = {
   noData: 'No data found!',
   selectAll: false,
   selectAllText: 'Select all',
-  multiple: false,
+  multiple: true,
   jsSearch: false,
   serverSearch: false,
   searchTimeout: 200,
   option: {
-    name: 'text',
-    value: 'id'
+    name: 'name',
+    value: 'value'
   }
 };

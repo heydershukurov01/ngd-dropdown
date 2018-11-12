@@ -13,7 +13,7 @@ export class Option {
   private _selectCandidates(value, options, configs) {
     this.values = [];
     if (value) {
-      if (value.length && value.length > 0) {
+      if (value.length && Array.isArray(value)) {
         if (options && options.length && options.length > 0) {
           this.options = options.map(option => {
             Object.assign(option, {visible: true});

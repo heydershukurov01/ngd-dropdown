@@ -9,24 +9,43 @@ import {HttpClient} from '@angular/common/http';
 })
 export class AppComponent {
   // Multiple
-  title = 2;
+  title;
   // Single
   // title = {title: 'Test Madafaka'};
-  options = [{text: 'Test 1 ', id: 1}, {text: 'Test 2', id: 2}, {text: 'Test 3', id: 3}, {text: 'Test 4', id: 4}, {text: 'Test 5', id: 5}];
+  options = [];
   // options = [];
   private form: FormGroup;
   constructor(private fb: FormBuilder, private http: HttpClient) {
-    // setTimeout(() => {
-    //   this.title = [...this.title, 4];
-    //   console.log(this.title, 'Outside');
-    // }, 3000);
+    setTimeout(() => {
+      this.options = [
+        {'name': 'Heз biri', 'value': null}, {
+        'name': '?laq?li istifad?зi qruplari',
+        'value': '36',
+      }, {'name': 'Reqlament', 'value': '35'}, {
+        'name': 'S?xsl?r',
+        'value': '32',
+      }, {'name': 'Layih?l?r', 'value': '31'}, {
+        'name': 'Qurumlar',
+        'value': '30',
+      }, {'name': 'Istidad?зi qruplari', 'value': '28'}, {
+        'name': 'Menyular',
+        'value': '29',
+      }, {'name': 'Istifad?зi qrupu tipl?ri', 'value': '19'}, {
+        'name': 'Sisteml?r',
+        'value': '24',
+      }, {'name': 'Istifad?зil?r', 'value': '18'}, {
+        'name': 'Web servisl?r',
+        'value': '17',
+      }];
+    }, 3000);
     this.form = this.fb.group({
       select: ['', Validators.required],
       name: ['']
     });
   }
   log(data) {
-    this.http.get('https://jsonplaceholder.typicode.com/posts/' + this.title).subscribe();
+    console.log(data);
+    // this.http.get('https://jsonplaceholder.typicode.com/posts/' + this.title).subscribe();
   }
   submitted() {
     console.log(this.form.value);

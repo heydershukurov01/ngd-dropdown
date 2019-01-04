@@ -1,7 +1,13 @@
 # NGD-DROPDOWN
 **NGD-DROPDOWN** is an Angular library for multiselectable and singleselectable dropdown component. The goal is to create a simple core library that makes option selection process nice and easy.
 
-## Current Version (0.2.0)
+## Current Version (0.3.0)
+Changelog
+  - Dropdown closes if clicked outside
+  - Major Bug Fixes
+  - Performance upgrade
+  
+## Version (0.2.0)
 Changelog
   - Select all button
   - Now only selected option's value is emitted (before it was selected object)
@@ -10,7 +16,7 @@ Changelog
   - Minor Bug Fixes
   - Performance upgrade
   
-## Current Version (0.1.0)
+## Version (0.1.0)
 Changelog
   - Support for Angular version 7
   - Support for Reactive Forms

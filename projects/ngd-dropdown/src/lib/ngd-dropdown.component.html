@@ -1,9 +1,14 @@
 <!-- Selected Data will be present here -->
-<div [class]="'ngd-' + configs?.theme" >
+<div [class]="'ngd-' + configs?.theme" #dropdown>
   <div class="ngd-dropdown-view cursor-pointer" (click)="toggleDropdown($event)">
     <div class="ngd-badge-container">
           <ng-container *ngFor="let selected of localValue; let index = index">
-            <span class="ngd-dropdown-badge">{{selected[configs?.option?.name] ? selected[configs?.option?.name] : selected}} <button type="button" class="ngd-close ngd-font-20" (click)="unselect(index)">&times;</button></span>
+            <ng-container *ngIf="configs?.multiple">
+              <span class="ngd-dropdown-badge">{{selected[configs?.option?.name] ? selected[configs?.option?.name] : selected}} <button type="button" class="ngd-close ngd-font-20" (click)="unselect(index)">&times;</button></span>
+            </ng-container>
+            <ng-container *ngIf="!configs?.multiple">
+              <span class="ngd-single-selected">{{selected[configs?.option?.name] ? selected[configs?.option?.name] : selected}}</span>
+            </ng-container>
           </ng-container>
         <ng-container *ngIf="localValue?.length === 0">
           <span class="ngd-placeholder">{{configs?.placeholder}}</span>

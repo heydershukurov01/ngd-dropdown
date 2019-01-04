@@ -3,6 +3,9 @@
   Created 17.05.2018
  */
 /* View */
+.ngd-default {
+  position: relative;
+}
 .ngd-default .ngd-dropdown-view{
   border: 1px solid lightgray;
   border-radius: 2px;
@@ -12,6 +15,11 @@
 }
 .ngd-placeholder{
   color: gray;
+  padding-top: 5px;
+  font-family: "Segoe UI" , Helvetica;
+}
+.ngd-single-selected{
+  color: black;
   padding-top: 5px;
   font-family: "Segoe UI" , Helvetica;
 }
@@ -41,6 +49,8 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  position: absolute;
+  background: white;
 }
 /* Search Input */
 .ngd-default .ngd-dropdown-browsing-container  .ngd-search-input{

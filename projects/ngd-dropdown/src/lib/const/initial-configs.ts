@@ -21,7 +21,7 @@ export const InitialConfigs: NgdDropdownConfigs = {
   noData: 'No data found!',
   selectAll: false,
   selectAllText: 'Select all',
-  multiple: true,
+  multiple: false,
   jsSearch: false,
   serverSearch: false,
   searchTimeout: 200,

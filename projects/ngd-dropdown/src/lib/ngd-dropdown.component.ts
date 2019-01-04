@@ -4,8 +4,9 @@
  */
 import * as initial from './const/initial-configs';
 import * as model from './const/models';
-import {Component, DoCheck, EventEmitter, forwardRef, Input, Output} from '@angular/core';
+import {AfterViewInit, Component, DoCheck, ElementRef, EventEmitter, forwardRef, Input, OnDestroy, Output, ViewChild} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {fromEvent} from 'rxjs';
 
 const customValueProvider = {
   provide: NG_VALUE_ACCESSOR,
@@ -18,14 +19,15 @@ const customValueProvider = {
   templateUrl: './ngd-dropdown.component.html',
   styleUrls: [`./ngd-dropdown.component.css`],
   providers: [customValueProvider],
-
 })
-export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
+export class NgdDropdownComponent implements DoCheck, ControlValueAccessor, AfterViewInit, OnDestroy {
+  private globalClick;
   public toggle = false;
   public globalValue: any = [];
   public localValue: any = [];
   @Input() public configs = initial.InitialConfigs;
   @Input() public options = [];
+  @ViewChild('dropdown') dropdown: ElementRef;
   public term = '';
   private _searchTimeout: any;
   public selectAllToggle = false;
@@ -43,6 +45,11 @@ export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
    * Propogate  changes to value
    */
   public propagateChange: any = () => {};
+  public ngAfterViewInit(): void {
+    this.globalClick = fromEvent(document, 'click').subscribe((event: MouseEvent) => {
+        this._clickOutside(event);
+    });
+  }
 
   public ngDoCheck() {
     this._setInitialValue();
@@ -247,5 +254,27 @@ export class NgdDropdownComponent implements DoCheck, ControlValueAccessor {
     }
     this._valueProcessor(this.localValue);
     this._emitRawData(this.selectAllToggle ? 'allSelected' : 'allUnSelected', this.localValue);
+  }
+  private _clickOutside(event) {
+    const box = this.dropdown.nativeElement;
+    if (!this._isDescendant(box, event.target)) {
+      this.closeDropdown();
+    }
+  }
+  private _isDescendant(parent, child) {
+    let node = child;
+    while (node !== null) {
+      if (node === parent) {
+        return true;
+      } else {
+        node = node.parentNode;
+      }
+    }
+    return false;
+  }
+  ngOnDestroy(): void {
+    if (!this.globalClick) {
+      this.globalClick.unsubscribe();
+    }
   }
 }

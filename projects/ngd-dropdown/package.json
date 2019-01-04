@@ -1,7 +1,7 @@
 {
   "name": "ngd-dropdown",
   "version": "0.3.0",
-  "description": "Exception handler for Angular Applications",
+  "description": "NGD-DROPDOWN is an Angular library for multiselectable and singleselectable dropdown component. The goal is to create a simple core library that makes option selection process nice and easy.",
   "keywords": ["angular", "typescript", "dropdown", "multiselect", "multiselect-dropdown", "select"],
   "peerDependencies": {
     "@angular/common": "^6.0.0-rc.0 || ^7.0.0",

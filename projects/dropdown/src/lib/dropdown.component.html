@@ -31,7 +31,7 @@
             <ng-container *ngIf="configs?.multiple">
               <input type="checkbox" [checked]="option?.selected ? 'checked' : ''">
             </ng-container>
-            {{option ? option[configs?.option?.name] : ''}} {{option?.visible ? 'Yes' : 'no'}}</li>
+            {{option ? option[configs?.option?.name] : ''}}</li>
         </ng-container>
       </ng-container>
       <ng-container *ngIf="options?.length === 0">

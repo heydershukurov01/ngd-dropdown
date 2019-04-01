@@ -29,7 +29,6 @@ export class Option {
         }
       } else {
         this.options = options.map(option => {
-          console.log(option.visible);
           Object.assign(option, {visible: typeof option.visible === 'undefined' ? true : typeof option.visible === 'boolean' && option.visible});
           Object.assign(option, {selected: false});
           if ( String(value) === String(option[configs.option.value])) {

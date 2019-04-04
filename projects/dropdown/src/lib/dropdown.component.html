@@ -11,7 +11,7 @@
         </ng-container>
       </ng-container>
       <ng-container *ngIf="localValue?.length === 0">
-        <span class="ngd-placeholder">{{configs?.placeholder}}</span>
+        <span class="ngd-placeholder">{{configs?.placeholder}} {{placeholder}}</span>
       </ng-container>
     </div>
     <div class="ngd-action-container">
@@ -20,7 +20,7 @@
   </div>
   <!-- Browser area -->
   <div class="ngd-dropdown-browsing-container cursor-pointer" *ngIf="toggle">
-    <input type="text" class="ngd-search-input" (input)="searched()" [(ngModel)]="term" *ngIf="configs?.jsSearch || configs?.serverSearch">
+    <input type="text" class="ngd-search-input" [placeholder]="searchPlaceholder" (input)="searched()" [(ngModel)]="term" *ngIf="configs?.jsSearch || configs?.serverSearch">
     <ul class="ngd-dropdown-results-container">
       <ng-container *ngIf="options && options.length > 0">
         <li class="ngd-dropdown-result"  *ngIf="configs.selectAll && configs.multiple" (click)="selectAllData()">

@@ -27,6 +27,8 @@ export class DropdownComponent implements DoCheck, ControlValueAccessor, AfterVi
   public localValue: any = [];
   @Input() public configs = initial.InitialConfigs;
   @Input() public options = [];
+  @Input() public placeholder: string;
+  @Input() public searchPlaceholder: string;
   @ViewChild('dropdown') dropdown: ElementRef;
   public term = '';
   private _searchTimeout: any;
@@ -135,6 +137,8 @@ export class DropdownComponent implements DoCheck, ControlValueAccessor, AfterVi
           item.selected = item[this.configs.option.value] === option[this.configs.option.value];
           return item;
         });
+        this.term = '';
+        this.searched();
         this._valueProcessor(this.localValue);
         this.selected.emit(option[this.configs.option.value]);
       } else {

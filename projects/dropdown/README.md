@@ -1,6 +1,11 @@
 # NGD-DROPDOWN
 **NGD-DROPDOWN** is an Angular library for multiselectable and singleselectable dropdown component. The goal is to create a simple core library that makes option selection process nice and easy.
 
+## Current Version (0.3.10)
+Changelog
+  - Placeholder input for dropdown placeholder
+  - Search Placeholder input for search input placeholder
+
 ## Current Version (0.3.0)
 Changelog
   - Dropdown closes if clicked outside
@@ -107,6 +112,14 @@ The configurations are for customization. All the default values are provided. S
  type: `any | any[]` \
  default: `null`  \
  description: `Two way data binded value of select object. If multiple selection enabled value will be array else will be string or number`
+### placeholder
+ type: `string`
+ default: `null`
+ description: `Placeholder for select dropdown`
+### searchPlaceholder
+ type: `string`
+ default: `null`
+ description: `Placeholder for search input`
 
 ## Outputs
 ### Dropdown Opened (dropdownOpened)
@@ -141,5 +154,5 @@ The configurations are for customization. All the default values are provided. S
 Tested in Chrome , Firefox , IE 9-11 , Edge , Safari
 
 ## Copyright
-Copyright © 2018
+Copyright © 2018 - 2019
 

@@ -11,7 +11,11 @@
  * automatically update themselves. This includes Safari >= 10, Chrome >= 55 (including Opera),
  * Edge >= 13 on the desktop, and iOS 10 and Chrome on mobile.
  *
+<<<<<<< HEAD
  * Learn more in https://angular.io/guide/browser-support
+=======
+ * Learn more in https://angular.io/docs/ts/latest/guide/browser-support.html
+>>>>>>> 8a92087af98ee5defea26056c0584574ee5238e4
  */
 
 /***************************************************************************************************
@@ -34,6 +38,7 @@
 // import 'core-js/es6/weak-map';
 // import 'core-js/es6/set';
 
+<<<<<<< HEAD
 /**
  * If the application will be indexed by Google Search, the following is required.
  * Googlebot uses a renderer based on Chrome 41.
@@ -41,12 +46,23 @@
  **/
 // import 'core-js/es6/array';
 
+=======
+>>>>>>> 8a92087af98ee5defea26056c0584574ee5238e4
 /** IE10 and IE11 requires the following for NgClass support on SVG elements */
 // import 'classlist.js';  // Run `npm install --save classlist.js`.
 
 /** IE10 and IE11 requires the following for the Reflect API. */
 // import 'core-js/es6/reflect';
 
+<<<<<<< HEAD
+=======
+
+/** Evergreen browsers require these. **/
+// Used for reflect-metadata in JIT. If you use AOT (and only Angular decorators), you can remove.
+import 'core-js/es7/reflect';
+
+
+>>>>>>> 8a92087af98ee5defea26056c0584574ee5238e4
 /**
  * Web Animations `@angular/platform-browser/animations`
  * Only required if AnimationBuilder is used within the application and using IE/Edge or Safari.
@@ -75,6 +91,10 @@
 import 'zone.js/dist/zone';  // Included with Angular CLI.
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8a92087af98ee5defea26056c0584574ee5238e4
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */

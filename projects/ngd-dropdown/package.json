@@ -1,0 +1,18 @@
+{
+  "name": "ngd-dropdown",
+  "version": "0.3.1",
+  "description": "NGD-DROPDOWN is an Angular library for multiselectable and singleselectable dropdown component. The goal is to create a simple core library that makes option selection process nice and easy.",
+  "keywords": ["angular", "typescript", "dropdown", "multiselect", "multiselect-dropdown", "select"],
+  "peerDependencies": {
+    "@angular/common": "^6.0.0-rc.0 || ^7.0.0",
+    "@angular/core": "^6.0.0-rc.0 || ^7.0.0"
+  },
+  "homepage": "https://github.com/heydershukurov01/ngd-dropdown",
+  "bugs": { "url" : "https://github.com/heydershukurov01/ngd-dropdown/issues"
+  , "email" : "heydar.shukurov@asan.gov.az"
+  },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/heydershukurov01/ngd-dropdown"
+  }
+}

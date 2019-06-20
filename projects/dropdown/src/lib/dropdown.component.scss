@@ -63,6 +63,7 @@
   max-height: 400px;
   margin: 0;
   padding: 0;
+  overflow-y: auto;
 }
 .ngd-default .ngd-dropdown-browsing-container  .ngd-dropdown-results-container .ngd-dropdown-result{
   transition: 200ms;

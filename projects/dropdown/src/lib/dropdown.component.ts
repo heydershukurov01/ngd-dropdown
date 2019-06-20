@@ -208,9 +208,22 @@ export class DropdownComponent implements DoCheck, ControlValueAccessor, AfterVi
    * payload
    */
   private _emitRawData(action: string, payload: any) {
-    const payloadData: {visible?: boolean, selected?: boolean} = Object.assign({}, payload);
-    delete payloadData.visible;
-    delete payloadData.selected;
+    let payloadData: any;
+    if (this.configs.multiple) {
+      payloadData = [];
+      this.options.forEach(option => {
+        const data = Object.assign({}, option);
+        if (data.selected) {
+          delete data.visible;
+          delete data.selected;
+          payloadData = [...payloadData, data];
+        }
+      });
+    } else {
+      payloadData = Object.assign({}, payload);
+      delete payloadData.visible;
+      delete payloadData.selected;
+    }
     this.rawData.emit({action, payloadData});
   }
 

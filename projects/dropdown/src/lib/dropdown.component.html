@@ -1,6 +1,6 @@
 <!-- Selected Data will be present here -->
 <div [class]="'ngd-' + configs?.theme" #dropdown>
-  <div class="ngd-dropdown-view cursor-pointer" (click)="toggleDropdown($event)">
+  <div class="ngd-dropdown-view text-will-be-here-test cursor-pointer" (click)="toggleDropdown($event)">
     <div class="ngd-badge-container">
       <ng-container *ngFor="let selected of localValue; let index = index">
         <ng-container *ngIf="configs?.multiple">
@@ -20,7 +20,7 @@
   </div>
   <!-- Browser area -->
   <div class="ngd-dropdown-browsing-container cursor-pointer" *ngIf="toggle">
-    <input type="text" class="ngd-search-input" [placeholder]="searchPlaceholder" (input)="searched()" [(ngModel)]="term" *ngIf="configs?.jsSearch || configs?.serverSearch">
+    <input type="text" class="ngd-search-input" [placeholder]="searchPlaceholder !== 'undefined' ? searchPlaceholder : ''" (input)="searched()" [(ngModel)]="term" *ngIf="configs?.jsSearch || configs?.serverSearch">
     <ul class="ngd-dropdown-results-container">
       <ng-container *ngIf="options && options.length > 0">
         <li class="ngd-dropdown-result"  *ngIf="configs.selectAll && configs.multiple" (click)="selectAllData()">

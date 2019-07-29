@@ -79,10 +79,12 @@ export class DropdownComponent implements DoCheck, ControlValueAccessor, AfterVi
   registerOnTouched(fn: () => void): void { }
 
   private _setInitialValue() {
-    const reformedValues = new model.Option(this.globalValue, this.options, this.configs);
-    this.options = reformedValues.options;
-    this.localValue = reformedValues.values;
-    this.selectAllToggle = reformedValues.selectedAll;
+    setTimeout(() => {
+      const reformedValues = new model.Option(this.globalValue, this.options, this.configs);
+      this.options = reformedValues.options;
+      this.localValue = reformedValues.values;
+      this.selectAllToggle = reformedValues.selectedAll;
+    });
   }
 
   /**
@@ -208,23 +210,25 @@ export class DropdownComponent implements DoCheck, ControlValueAccessor, AfterVi
    * payload
    */
   private _emitRawData(action: string, payload: any) {
-    let payloadData: any;
-    if (this.configs.multiple) {
-      payloadData = [];
-      this.options.forEach(option => {
-        const data = Object.assign({}, option);
-        if (data.selected) {
-          delete data.visible;
-          delete data.selected;
-          payloadData = [...payloadData, data];
-        }
-      });
-    } else {
-      payloadData = Object.assign({}, payload);
-      delete payloadData.visible;
-      delete payloadData.selected;
-    }
-    this.rawData.emit({action, payloadData});
+    setTimeout(() => {
+      let payloadData: any;
+      if (this.configs.multiple) {
+        payloadData = [];
+        this.options.forEach(option => {
+          const data = Object.assign({}, option);
+          if (data.selected) {
+            delete data.visible;
+            delete data.selected;
+            payloadData = [...payloadData, data];
+          }
+        });
+      } else {
+        payloadData = Object.assign({}, payload);
+        delete payloadData.visible;
+        delete payloadData.selected;
+      }
+      this.rawData.emit({action, payloadData});
+    }, 10);
   }
 
   /**
